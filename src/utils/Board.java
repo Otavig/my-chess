@@ -80,22 +80,22 @@ public class Board {
 	}
 	
 	public boolean addIfValid(List<Position> moves, int row, int col, String color) {
-		if(!isInsideTheBoard(row,col)) return false;
+		if(!isInsideTheBoard(row,col)) return true;
 		
 		Square destiny = squares[row][col];
 		Piece pieceInDestiny = destiny.getPiece();
 
 		if(pieceInDestiny == null) {
 			moves.add(new Position(row, col));
-			return true;
+			return false;
 		}
 		
 		if(!pieceInDestiny.getColor().equals(color)) {
 			moves.add(new Position(row, col));
-			return false;
+			return true;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public Piece getPiece(int row, int col) {

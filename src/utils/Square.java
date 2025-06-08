@@ -6,7 +6,7 @@ public class Square {
 	private int row;
 	private int col;
 	private boolean white;
-	private Piece piece;
+	private Piece piece = null;
 	
 	public Square(int row, int col) {
 		this.row = row;

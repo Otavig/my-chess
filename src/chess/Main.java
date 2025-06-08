@@ -26,11 +26,17 @@ public class Main {
                 System.out.println("\nPeça na posição (" + row + ", " + col + "): " + piece.getSymbol());
 
                 List<Position> moves = chess.getValidMoves(row, col);
-                System.out.println("Movimentos válidos:");
+                
+                if(moves.size() > 0)  {
+                	System.out.println("Movimentos válidos:");
 
-                for (Position pos : moves) {
-                    System.out.println("-> (" + pos.getRow() + ", " + pos.getCol() + ")");
+                	for (Position pos : moves) {
+                		System.out.println("-> (" + pos.getRow() + ", " + pos.getCol() + ")");
+                	}
+                } else {
+                	System.out.println("Não há movimentos válidos para essa peça!");
                 }
+                
             } else {
                 System.out.println("Nenhuma peça na posição (" + row + ", " + col + ")");
             }
