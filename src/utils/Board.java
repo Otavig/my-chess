@@ -108,4 +108,27 @@ public class Board {
 	    if (piece == null) return new ArrayList<>();
 	    return piece.getMovesValid(this, row, col);
 	}
+	
+	public boolean movePiece(int row, int col, int newRow, int newCol) {
+		if (!isInsideTheBoard(newRow, newCol)) return false;
+		
+		Square from = squares[row][col];
+		Square to = squares[newRow][newCol];
+		
+		Piece movingPiece = from.getPiece();
+		
+		if (movingPiece == null) return false; 
+		
+		if (movingPiece instanceof Pawn) {
+		    Pawn pawn = (Pawn) movingPiece;
+		    if (!pawn.getMoved()) {
+		        pawn.setMoved(true);
+		    }
+		}
+			
+		to.setPiece(movingPiece);
+		from.setPiece(null);
+		
+		return true;
+	}
 }

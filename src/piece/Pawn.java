@@ -21,17 +21,17 @@ public class Pawn extends Piece {
 
 	@Override
 	public List<Position> getMovesValid(Board board, int row, int col) {
-		List<Position> moves = new ArrayList<>();
+	    List<Position> moves = new ArrayList<>();
 	    int direction = color.equals("white") ? 1 : -1;
 
 	    int nextRow = row + direction;
 
-	    // Movimento normal de 1 casa
+	    // 1 casa
 	    if (board.isInsideTheBoard(nextRow, col) &&
 	        board.getPiece(nextRow, col) == null) {
 	        moves.add(new Position(nextRow, col));
 
-	        // Movimento de 2 casas (apenas se ainda não moveu)
+	        // 2 casas 
 	        int twoStepsRow = row + 2 * direction;
 	        if (!moved && board.isInsideTheBoard(twoStepsRow, col) &&
 	            board.getPiece(twoStepsRow, col) == null) {
@@ -39,7 +39,7 @@ public class Pawn extends Piece {
 	        }
 	    }
 
-	    // Capturas diagonais
+	    // Diagonais 
 	    for (int dCol = -1; dCol <= 1; dCol += 2) {
 	        int diagCol = col + dCol;
 	        if (board.isInsideTheBoard(nextRow, diagCol)) {
@@ -49,7 +49,15 @@ public class Pawn extends Piece {
 	            }
 	        }
 	    }
-	    
+
 	    return moves;
+	}
+	
+	public boolean getMoved() { 
+		return this.moved;
+	}
+	
+	public void setMoved(boolean moved) { 
+		this.moved=moved;
 	}
 }

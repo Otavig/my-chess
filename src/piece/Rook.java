@@ -33,12 +33,12 @@ public class Rook extends Piece {
 		for(int i = row-1; i>=0 && conditional; i--)
 			conditional = !board.addIfValid(moves, i, col, this.color);
 		
-	    // Direita (coluna aumenta)
+	    // Direita 
 		conditional = true;
 		for(int j = col+1; j<8 && conditional; j++)
 			conditional = !board.addIfValid(moves, row, j, this.color);
 		
-		// Esquerda (coluna diminui)
+		// Esquerda
 		conditional = true;
 		for(int j = col-1; j>=0 && conditional; j++)
 			conditional = !board.addIfValid(moves, row, j, this.color);
