@@ -8,6 +8,7 @@ import utils.Position;
 
 public class Rook extends Piece {
 	private int value = 5;
+	private boolean moved = false;
 	
 	public Rook(String color) {
 		super(color);
