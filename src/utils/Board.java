@@ -13,6 +13,8 @@ import piece.Rook;
 
 public class Board {
 	public Square[][] squares;
+	private int pWhite = 0;
+	private int pBlack = 0;
 	
 	public Board() {
 		squares = new Square[8][8];
@@ -109,7 +111,7 @@ public class Board {
 	    return piece.getMovesValid(this, row, col);
 	}
 	
-	public boolean movePiece(int row, int col, int newRow, int newCol) {
+	public boolean movePiece(int row, int col, int newRow, int newCol, String color) {
 		if (!isInsideTheBoard(newRow, newCol)) return false;
 		
 		Square from = squares[row][col];
@@ -125,10 +127,28 @@ public class Board {
 		        pawn.setMoved(true);
 		    }
 		}
-			
+		
+		Piece nextMoving = to.getPiece();
+		
+		if(nextMoving != null) 
+			setPiecesDie(color);
+		
 		to.setPiece(movingPiece);
 		from.setPiece(null);
 		
 		return true;
+	}
+	
+	public int getPWhite() {
+		return pWhite;
+	}
+	
+	public int getPBlack() {
+		return pBlack;
+	}
+	
+	public void setPiecesDie(String color) {
+		if(color == "white") pWhite += 1;
+		else pBlack += 1;
 	}
 }

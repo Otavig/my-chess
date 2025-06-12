@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"piece","c":"King","l":"getMovesValid(Board, int, int)","u":"getMovesValid(utils.Board,int,int)"},{"p":"piece","c":"King","l":"getSymbol()"},{"p":"piece","c":"King","l":"King(String)","u":"%3Cinit%3E(java.lang.String)"}];updateSearchResults();

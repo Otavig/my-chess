@@ -56,6 +56,8 @@ public class Main {
                 int newRow = initialGame.nextInt();
                 System.out.print("Digite a coluna: ");
                 int newCol = initialGame.nextInt();
+                
+//                if(newRow == 190|| newCol == 190) { System.out.printf("B: %s  -  W: %s",  chess.getPBlack(), chess.getPWhite());} 
 
                 // Verifica se a nova posição é válida
                 boolean moveValid = false;
@@ -65,8 +67,8 @@ public class Main {
                 }
 
                 if (moveValid) {
-                    repeat = chess.movePiece(row, col, newRow, newCol);
-                    round = round.equals("white") ? "black" : "white"; 
+                	round = round.equals("white") ? "black" : "white"; 
+                    repeat = chess.movePiece(row, col, newRow, newCol, round);
                 } else {
                     System.out.println("Movimento inválido!");
                 }

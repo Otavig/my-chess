@@ -22,26 +22,24 @@ public class Rook extends Piece {
 	public List<Position> getMovesValid(Board board, int row, int col) {
 		List<Position> moves = new ArrayList<Position>();
 		
-		boolean conditional = true;
-		
-		// Baixo
-		for(int i = row+1; i<8 && conditional; i++)
-			conditional = !board.addIfValid(moves, i, col, this.color);
-		
-		// Cima
-		conditional = true;
-		for(int i = row-1; i>=0 && conditional; i--)
-			conditional = !board.addIfValid(moves, i, col, this.color);
-		
-	    // Direita 
-		conditional = true;
-		for(int j = col+1; j<8 && conditional; j++)
-			conditional = !board.addIfValid(moves, row, j, this.color);
-		
-		// Esquerda
-		conditional = true;
-		for(int j = col-1; j>=0 && conditional; j++)
-			conditional = !board.addIfValid(moves, row, j, this.color);
+		int[][] directions = {
+			    {1, 0},    // Baixo
+			    {-1, 0},   // Cima
+			    {0, 1},    // Direita
+			    {0, -1}    // Esquerda
+			};
+
+		for (int[] dir : directions) {
+			int i = row + dir[0];
+			int j = col + dir[1];
+			boolean close = true;
+
+			while (i >= 0 && i < 8 && j >= 0 && j < 8 && close) {
+				close = !board.addIfValid(moves, i, j, this.color);
+			    i += dir[0];
+			    j += dir[1];
+			}
+		}
 		
 		return moves;
 	}
