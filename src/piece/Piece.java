@@ -17,5 +17,6 @@ public abstract class Piece {
 	}
 	
 	public abstract String getSymbol();
-	public abstract List<Position> getMovesValid(Board board, int row, int col);
+	public abstract List<Position> getMovesValid(Board board, int row, int col, boolean ignoreCheck);
+	public void markMoved() {}
 }

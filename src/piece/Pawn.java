@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovesValid(Board board, int row, int col) {
+	public List<Position> getMovesValid(Board board, int row, int col, boolean ignoreCheck) {
 	    List<Position> moves = new ArrayList<>();
 	    int direction = color.equals("white") ? 1 : -1;
 
@@ -53,11 +53,12 @@ public class Pawn extends Piece {
 	    return moves;
 	}
 	
+	@Override
+    public void markMoved() {
+        if (!moved) moved = true;
+    }
+	
 	public boolean getMoved() { 
 		return this.moved;
-	}
-	
-	public void setMoved(boolean moved) { 
-		this.moved=moved;
 	}
 }

@@ -108,35 +108,51 @@ public class Board {
 	public List<Position> getValidMoves(int row, int col) {
 	    Piece piece = getPiece(row, col);
 	    if (piece == null) return new ArrayList<>();
-	    return piece.getMovesValid(this, row, col);
+	    return piece.getMovesValid(this, row, col, false);
 	}
 	
 	public boolean movePiece(int row, int col, int newRow, int newCol, String color) {
-		if (!isInsideTheBoard(newRow, newCol)) return false;
-		
-		Square from = squares[row][col];
-		Square to = squares[newRow][newCol];
-		
-		Piece movingPiece = from.getPiece();
-		
-		if (movingPiece == null) return false; 
-		
-		if (movingPiece instanceof Pawn) {
-		    Pawn pawn = (Pawn) movingPiece;
-		    if (!pawn.getMoved()) {
-		        pawn.setMoved(true);
-		    }
-		}
-		
-		Piece nextMoving = to.getPiece();
-		
-		if(nextMoving != null) 
-			setPiecesDie(color);
-		
-		to.setPiece(movingPiece);
-		from.setPiece(null);
-		
-		return true;
+	    if (!isInsideTheBoard(newRow, newCol)) return false;
+
+	    Square from = squares[row][col];
+	    Square to = squares[newRow][newCol];
+
+	    Piece movingPiece = from.getPiece();
+
+	    if (movingPiece == null) return false; 
+
+	    // Detectar se foi roque
+	    if (movingPiece instanceof King) {
+	        King king = (King) movingPiece;
+	        if (!king.getMoved() && Math.abs(newCol - col) == 2) {
+	            // Roque detectado
+	            if (newCol > col) {
+	                // Roque pequeno (lado do rei)
+	                Square rookFrom = squares[row][7];
+	                Square rookTo = squares[row][col + 1];
+	                rookTo.setPiece(rookFrom.getPiece());
+	                rookFrom.setPiece(null);
+	            } else {
+	                // Roque grande (lado da dama)
+	                Square rookFrom = squares[row][0];
+	                Square rookTo = squares[row][col - 1];
+	                rookTo.setPiece(rookFrom.getPiece());
+	                rookFrom.setPiece(null);
+	            }
+	        }
+	    }
+
+	    movingPiece.markMoved();
+
+	    Piece nextMoving = to.getPiece();
+
+	    if (nextMoving != null)
+	        setPiecesDie(color);
+
+	    to.setPiece(movingPiece);
+	    from.setPiece(null);
+
+	    return true;
 	}
 	
 	public int getPWhite() {
@@ -151,4 +167,53 @@ public class Board {
 		if(color == "white") pWhite += 1;
 		else pBlack += 1;
 	}
+
+	public boolean isSquareUnderAttack(int row, int col, String color) {
+	    for (int i = 0; i < 8; i++) {
+	        for (int j = 0; j < 8; j++) {
+	            Square square = squares[i][j];
+	            if (square != null) {
+	                Piece piece = square.getPiece();
+	                if (piece != null && !piece.getColor().equals(color)) {
+	                    List<Position> enemyMoves = piece.getMovesValid(this, i, j, true);
+	                    for (Position pos : enemyMoves) {
+	                        if (pos.getRow() == row && pos.getCol() == col) {
+	                            return true;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    return false;
+	}
+	
+	public boolean isKingInCheck(String color) {
+	    int kingRow = -1;
+	    int kingCol = -1;
+
+	    // Procurar o rei no tabuleiro
+	    for (int i = 0; i < 8; i++) {
+	        for (int j = 0; j < 8; j++) {
+	            Square square = squares[i][j];
+	            if (square != null) {
+	                Piece piece = square.getPiece();
+	                if (piece instanceof King && piece.getColor().equals(color)) {
+	                    kingRow = i;
+	                    kingCol = j;
+	                    break;
+	                }
+	            }
+	        }
+	    }
+
+	    // Se não encontrou o rei (algo muito errado)
+	    if (kingRow == -1 || kingCol == -1) {
+	        throw new IllegalStateException("Rei não encontrado no tabuleiro.");
+	    }
+
+	    // Verifica se a casa do rei está sob ataque
+	    return isSquareUnderAttack(kingRow, kingCol, color);
+	}
+
 }

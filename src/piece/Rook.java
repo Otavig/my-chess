@@ -20,7 +20,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovesValid(Board board, int row, int col) {
+	public List<Position> getMovesValid(Board board, int row, int col, boolean ignoreCheck) {
 		List<Position> moves = new ArrayList<Position>();
 		
 		int[][] directions = {
@@ -44,4 +44,14 @@ public class Rook extends Piece {
 		
 		return moves;
 	}
+	
+	@Override
+    public void markMoved() {
+        if (!moved) moved = true;
+    }
+	
+	public boolean getMoved() { 
+		return this.moved;
+	}
+	
 }

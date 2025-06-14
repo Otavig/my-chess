@@ -19,7 +19,7 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public List<Position> getMovesValid(Board board, int row, int col) {
+	public List<Position> getMovesValid(Board board, int row, int col, boolean ignoreCheck) {
 	    List<Position> moves = new ArrayList<>();
 	    
 	    int[][] directions = {

@@ -19,7 +19,7 @@ public class Knight extends Piece{
 	}
 
 	@Override
-	public List<Position> getMovesValid(Board board, int row, int col) {
+	public List<Position> getMovesValid(Board board, int row, int col, boolean ignoreCheck) {
 		List<Position> moves = new ArrayList<>();
 		
 		if(row < 8 && row >= 0 && col < 8 && col >= 0) {
